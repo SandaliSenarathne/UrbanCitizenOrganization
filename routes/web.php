@@ -22,3 +22,4 @@ Route::get('/online-conferences', function () {
 });
 
 Route::post('/meeting-create-and-join', 'MeetingController@createAndJoin');
+Route::post('/meeting-schedule', 'MeetingController@schedule');
