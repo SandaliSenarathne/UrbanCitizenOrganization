@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('/online-conferences', function () {
     return view('onlineConferences');
 });
+
+Route::post('/meeting-create-and-join', 'MeetingController@createAndJoin');

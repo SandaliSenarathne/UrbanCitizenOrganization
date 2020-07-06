@@ -1,10 +1,8 @@
-html, body {
+.welcome-body {
     background-color: #fff;
-    color: #636b6f;
     font-family: 'Nunito', sans-serif;
     font-weight: 200;
-    height: 100vh;
-    margin: 0;
+    margin: 30;
 }
 
 .full-height {
@@ -33,6 +31,12 @@ html, body {
 
 .title {
     font-size: 64px;
+    color: #636b6f;
+}
+
+.subtitle {
+    font-size: 40px;
+    color: #636b6f;
 }
 
 .links > a {
@@ -47,4 +51,17 @@ html, body {
 
 .m-b-md {
     margin-bottom: 30px;
+}
+
+.margin-10{
+    margin: 10px;
+}
+
+.form-control{
+    margin: 5px;
+}
+
+.jumbotron{
+    padding-top: 15px;
+    padding-bottom: 15px;
 }

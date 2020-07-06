@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}" />
 
     </head>
-    <body>
+    <body class="welcome-body">
         {{-- ToDo --}}
         {{-- Create the Home page here and give the top navigation menu to login or register --}}
         <div class="flex-center position-ref">
