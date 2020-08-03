@@ -27,7 +27,7 @@
                     <a href="">Gallery</a>
                     <a href="">Blog</a>
                     <a href="/online-conferences">Online Conferences</a>
-                    <a href="">Donations</a>
+                    <a href="/view-meetings">Donations</a>
                     <a href="">Archive</a>
                 </div>
             </div>

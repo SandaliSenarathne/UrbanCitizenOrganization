@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+
+use BigBlueButton\BigBlueButton;
+use BigBlueButton\Parameters\CreateMeetingParameters;
+use BigBlueButton\Parameters\JoinMeetingParameters;
 
 class MeetingController extends Controller
 {
@@ -12,13 +17,33 @@ class MeetingController extends Controller
         $meetingID = $request->meetingName;
         $meetingName = $request->meetingName;
         $description = $request->description;
-        $moderator_password = $request->moderatorPwd;
-        $attendee_password = 'attendee_pwd';
+        $moderatorPassword = $request->moderatorPwd;
+        $attendeePassword = $request->attendeePwd == null ? 'attendee_pwd' : $request->attendeePwd;
         $recording = $request->recording;
 
+        $bbb = new BigBlueButton();
 
-        echo ($user.' '.$meetingID.' '.$meetingName.' '.$description.' '.$moderator_password.
-        ' '.$attendee_password.' '.$recording);
+        $createParams = new CreateMeetingParameters($meetingID, $meetingName);
+        $createParams = $createParams->setModeratorPassword($moderatorPassword)
+                                     ->setAttendeePassword($attendeePassword)
+                                     ->setRecord($recording)
+                                     ->setAllowStartStopRecording($recording)
+                                     ->setAutoStartRecording(false)
+                                     ->setLogoutUrl(URL::previous());
+
+        $response = $bbb->createMeeting($createParams);
+        if ($response->getReturnCode() == 'FAILED') {
+            return 'Can\'t create room! please contact our administrator.';
+        } else {
+            $joinParams = new JoinMeetingParameters($meetingID, $user, $moderatorPassword);
+
+            // Ask for immediate redirection
+            $joinParams->setRedirect(true);
+            $url = $bbb->getJoinMeetingURL($joinParams);
+            return redirect($url);
+        }
+
+
 
     }
 
@@ -30,14 +55,15 @@ class MeetingController extends Controller
         $description = $request->description;
         $date = $request->date;
         $time = $request->time;
-        $moderator_password = $request->moderatorPwd;
-        $attendee_password = 'attendee_pwd';
+        $moderatorPassword = $request->moderatorPwd;
+        $attendeePassword = $request->attendeePwd == null ? 'attendee_pwd' : $request->attendeePwd;
         $recording = $request->recording;
         $calendar = $request->calendar;
 
 
-        echo ($user.' '.$meetingID.' '.$meetingName.' '.$description.' '.$date.' '.$time.' '.$moderator_password.
-        ' '.$attendee_password.' '.$recording.' '.$calendar);
+        echo ($user.' '.$meetingID.' '.$meetingName.' '.$description.' '.$date.' '.$time.' '.$moderatorPassword.
+        ' '.$attendeePassword.' '.$recording.' '.$calendar);
 
     }
+
 }
