@@ -32,7 +32,7 @@
                             <input type="text" name="user" class="form-control" placeholder="Your Name" required>
                             <input type="text" name="meetingName" class="form-control" placeholder="Meeting Name" required>
                             <textarea name="description" cols="30" rows="5" class="form-control" placeholder="Description" required></textarea>
-                            <input type="text" name="moderatorPwd" class="form-control" placeholder="Set Moderator Password" required>
+                            <input type="text" name="moderatorPwd" class="form-control" placeholder="Set Moderator Password (Not Required)">
                             <input type="text" name="attendeePwd" class="form-control" placeholder="Set Attendee Password (Not Required)">
                             <div class="form-check margin-10" align='left'>
                                 <input type="checkbox" class="form-check-input" name="recording">
@@ -52,7 +52,7 @@
                             <textarea name="description" cols="30" rows="5" class="form-control" placeholder="Description" required></textarea>
                             <input type="date" name="date" class="form-control" value="<?php echo date("Y-m-d"); ?>" min="<?php echo date("Y-m-d"); ?>" required>
                             <input type="time" name="time" class="form-control" value="<?php echo date("H:i"); ?>" required>
-                            <input type="text" name="moderatorPwd" class="form-control" placeholder="Set Moderator Password" required>
+                            <input type="text" name="moderatorPwd" class="form-control" placeholder="Set Moderator Password (Not Required)">
                             <input type="text" name="attendeePwd" class="form-control" placeholder="Set Attendee Password (Not Required)">
                             <div class="row margin-10">
                                 <div class="col-md-2"></div>

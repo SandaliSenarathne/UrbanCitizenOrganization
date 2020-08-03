@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+date_default_timezone_set("Asia/Kolkata");
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -9,17 +11,48 @@ use BigBlueButton\BigBlueButton;
 use BigBlueButton\Parameters\CreateMeetingParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters;
 
+use App\Meeting;
+use PhpParser\Node\Stmt\Return_;
+
 class MeetingController extends Controller
 {
-    public function createAndJoin(Request $request){
+    public function create(Request $request){
 
-        $user = $request->user;
-        $meetingID = $request->meetingName;
-        $meetingName = $request->meetingName;
-        $description = $request->description;
-        $moderatorPassword = $request->moderatorPwd;
-        $attendeePassword = $request->attendeePwd == null ? 'attendee_pwd' : $request->attendeePwd;
-        $recording = $request->recording;
+        //Add meetings to the table
+        $meeting = new Meeting();
+
+        $meeting->meeting_name = $request->meetingName;
+        $meeting->meeting_description = $request->description;
+        $meeting->creator = $request->user;
+        $meeting->moderator_password = $request->moderatorPwd == null ? 'moderator_pwd' : $request->moderatorPwd;
+        $meeting->attendee_password = $request->attendeePwd == null ? 'attendee_pwd' : $request->attendeePwd;
+        $meeting->date = $request->date == null ? date("Y-m-d") : $request->date;
+        $meeting->time = $request->time == null ? date('H:i:s') : $request->time;
+        $meeting->recording = $request->recording != null ? true : false;
+        $meeting->display_on_calendar = $request->calendar != null ? true : false;
+        //If logged as an admin,
+        $meeting->approved = true;
+        //End If
+
+        $meeting->save();
+
+        return $meeting;
+
+    }
+
+    public function join(Meeting $meeting){ //Get meeting ID and user type(Attendee, moderator) as parameters
+
+        //When passing meeting ID get other details from database
+
+        $meetingID = $meeting->meeting_id;
+        $meetingName = $meeting->meeting_name;
+        $creator = $meeting->creator;
+        $moderatorPassword = $meeting->moderator_password;
+        $attendeePassword = $meeting->attendee_password;
+        //If a moderator, use moderator password, else use atendee password
+        $password = $moderatorPassword;
+        //End if
+        $recording = $meeting->recording;
 
         $bbb = new BigBlueButton();
 
@@ -29,41 +62,46 @@ class MeetingController extends Controller
                                      ->setRecord($recording)
                                      ->setAllowStartStopRecording($recording)
                                      ->setAutoStartRecording(false)
-                                     ->setLogoutUrl(URL::previous());
+                                     ->setLogoutUrl('127.0.0.1:8000/');
 
         $response = $bbb->createMeeting($createParams);
         if ($response->getReturnCode() == 'FAILED') {
             return 'Can\'t create room! please contact our administrator.';
         } else {
-            $joinParams = new JoinMeetingParameters($meetingID, $user, $moderatorPassword);
-
-            // Ask for immediate redirection
+            $joinParams = new JoinMeetingParameters($meetingID, $creator, $password);
             $joinParams->setRedirect(true);
             $url = $bbb->getJoinMeetingURL($joinParams);
             return redirect($url);
         }
 
+    }
 
+    public function createAndJoin(Request $request){
+
+        $meeting = $this->create($request);
+
+        $this->join($meeting); //Send meeting ID and user type(Attendee, moderator) as parameters
 
     }
 
     public function schedule(Request $request){
 
-        $user = $request->user;
-        $meetingID = $request->meetingName;
-        $meetingName = $request->meetingName;
-        $description = $request->description;
-        $date = $request->date;
-        $time = $request->time;
-        $moderatorPassword = $request->moderatorPwd;
-        $attendeePassword = $request->attendeePwd == null ? 'attendee_pwd' : $request->attendeePwd;
-        $recording = $request->recording;
-        $calendar = $request->calendar;
+        $meeting = $this->create($request);
 
+        return $meeting;
 
-        echo ($user.' '.$meetingID.' '.$meetingName.' '.$description.' '.$date.' '.$time.' '.$moderatorPassword.
-        ' '.$attendeePassword.' '.$recording.' '.$calendar);
+    }
 
+    function viewMeetings(){
+        $bbb = new BigBlueButton();
+        $response = $bbb->getMeetings();
+
+        if ($response->getReturnCode() == 'SUCCESS') {
+            print_r($response);
+            // foreach ($response->getRawXml()->meetings->meeting as $meeting) {
+            //     // process all meeting
+            // }
+        }
     }
 
 }
