@@ -53,17 +53,6 @@
                         </div>
                         <br>
 
-                        {{-- Check if attendee password equals default --}}
-                        {{-- @if($userType == 'attendee' && $attendeePassword != 'attendee_pwd')
-                            <input type="text" name="password" class="form-control" placeholder="Attendee Password">
-                        @elseif($userType == 'attendee' && $attendeePassword != 'attendee_pwd')
-                            <h2>No password for this session</h2>
-                        @elseif($userType == 'moderator' && $moderatorPassword != 'moderator_pwd')
-                            <input type="text" name="password" class="form-control" placeholder="Moderator Password">
-                        @elseif($userType == 'moderator' && $moderatorPassword == 'moderator_pwd')
-                            <h2>No password for this session</h2>
-                        @endif --}}
-
                         <input type="hidden" name="meetingID" value="{{$meetingID}}">
 
                         <input type="submit" class="btn btn-primary margin-10" value="Continue">

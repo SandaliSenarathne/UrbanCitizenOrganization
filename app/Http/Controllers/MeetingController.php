@@ -34,6 +34,9 @@ class MeetingController extends Controller
 
     }
 
+    public function joinDetails($meeting_id){
+        return view('joinDetails')->with('meeting_id', $meeting_id);
+    }
     public function joinViaCalendar(Request $request){
         $meetingID = $request->meetingID;
         $userType = $request->userType;
@@ -122,13 +125,10 @@ class MeetingController extends Controller
 
     }
 
+    // ----------------------------------------------------------------------------------------
     public function viewMeetings(){
         $meetings = Meeting::all();
         return view('viewMeetings')->with('meetings', $meetings);
-    }
-
-    public function joinDetails($meeting_id){
-        return view('joinDetails')->with('meeting_id', $meeting_id);
     }
 
 }

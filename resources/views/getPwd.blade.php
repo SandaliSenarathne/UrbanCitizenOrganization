@@ -41,7 +41,6 @@
                             $attendeePassword = $meeting->attendee_password;
                         ?>
 
-                        {{-- Check if attendee password equals default --}}
                         @if($userType == 'attendee' && $attendeePassword != 'attendee_pwd')
                             <input type="text" name="password" class="form-control" placeholder="Attendee Password">
                         @elseif($userType == 'attendee' && $attendeePassword == 'attendee_pwd')
