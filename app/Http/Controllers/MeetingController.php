@@ -16,6 +16,24 @@ use PhpParser\Node\Stmt\Return_;
 
 class MeetingController extends Controller
 {
+
+    public function createAndJoin(Request $request){
+
+        $meeting = $this->create($request);
+
+        $url = $this->join($meeting->meeting_id, 'moderator'); //Send meeting ID and user type(attendee, moderator) as parameters
+        return redirect($url);
+
+    }
+
+    public function schedule(Request $request){
+
+        $meeting = $this->create($request);
+
+        return $meeting;
+
+    }
+
     public function create(Request $request){
 
         //Add meetings to the table
@@ -40,18 +58,21 @@ class MeetingController extends Controller
 
     }
 
-    public function join(Meeting $meeting){ //Get meeting ID and user type(Attendee, moderator) as parameters
+    public function join($meetingID, $userType){ //Get meeting ID and user type(attendee, moderator) as parameters
 
         //When passing meeting ID get other details from database
+        $meeting = Meeting::find($meetingID);
 
-        $meetingID = $meeting->meeting_id;
         $meetingName = $meeting->meeting_name;
         $creator = $meeting->creator;
         $moderatorPassword = $meeting->moderator_password;
         $attendeePassword = $meeting->attendee_password;
-        //If a moderator, use moderator password, else use atendee password
-        $password = $moderatorPassword;
-        //End if
+        //If a moderator, use moderator password, else use attendee password
+        if ($userType == 'moderator'){
+            $password = $moderatorPassword;
+        }elseif($userType == 'attendee'){
+            $password = $attendeePassword;
+        }
         $recording = $meeting->recording;
 
         $bbb = new BigBlueButton();
@@ -71,37 +92,9 @@ class MeetingController extends Controller
             $joinParams = new JoinMeetingParameters($meetingID, $creator, $password);
             $joinParams->setRedirect(true);
             $url = $bbb->getJoinMeetingURL($joinParams);
-            return redirect($url);
+            return $url;
         }
 
-    }
-
-    public function createAndJoin(Request $request){
-
-        $meeting = $this->create($request);
-
-        $this->join($meeting); //Send meeting ID and user type(Attendee, moderator) as parameters
-
-    }
-
-    public function schedule(Request $request){
-
-        $meeting = $this->create($request);
-
-        return $meeting;
-
-    }
-
-    function viewMeetings(){
-        $bbb = new BigBlueButton();
-        $response = $bbb->getMeetings();
-
-        if ($response->getReturnCode() == 'SUCCESS') {
-            print_r($response);
-            // foreach ($response->getRawXml()->meetings->meeting as $meeting) {
-            //     // process all meeting
-            // }
-        }
     }
 
 }
