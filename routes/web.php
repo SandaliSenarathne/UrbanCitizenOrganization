@@ -1,6 +1,8 @@
 <?php
 
+use Facade\FlareClient\Http\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +23,19 @@ Route::get('/online-conferences', function () {
     return view('onlineConferences');
 });
 
+Route::post('/meeting-join-pwd', function (Request $request) {
+
+    $user = $request->user;
+    $userType = $request->userType;
+    $meetingID = $request->meetingID;
+
+    return view('getPwd')->with('user', $user)->with('userType', $userType)->with('meetingID', $meetingID);
+});
+
 Route::post('/meeting-create-and-join', 'MeetingController@createAndJoin');
 Route::post('/meeting-schedule', 'MeetingController@schedule');
+Route::post('/meeting-join', 'MeetingController@joinViaCalendar');
 
 
 Route::get('/view-meetings', 'MeetingController@viewMeetings');
+Route::get('/join-details/{meeting_id}', 'MeetingController@joinDetails');

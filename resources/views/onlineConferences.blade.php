@@ -18,10 +18,10 @@
     <div class="title flex-center position-ref">Online Conferencing</div>
 
     <?php
-        // ToDo - Get the logged user type
-        $user = 1; // 1 for admin, 0 for members
+        // ToDo - Get the logged user
+        $logged = 1; // 1 for true, 0 for false
     ?>
-    @if ($user == 1){{--If user is an admin--}}
+    @if ($logged == 1){{--If a user has logged in--}}
         <div class="container">
             <div class="row">
                 <div class="col-md-6">

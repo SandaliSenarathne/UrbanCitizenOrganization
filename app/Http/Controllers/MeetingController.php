@@ -21,7 +21,7 @@ class MeetingController extends Controller
 
         $meeting = $this->create($request);
 
-        $url = $this->join($meeting->meeting_id, 'moderator'); //Send meeting ID and user type(attendee, moderator) as parameters
+        $url = $this->join($meeting->meeting_id, 'moderator', $meeting->creator); //Send meeting ID and user type(attendee, moderator) as parameters
         return redirect($url);
 
     }
@@ -31,6 +31,32 @@ class MeetingController extends Controller
         $meeting = $this->create($request);
 
         return $meeting;
+
+    }
+
+    public function joinViaCalendar(Request $request){
+        $meetingID = $request->meetingID;
+        $userType = $request->userType;
+        $userName = $request->user;
+        $password = $request->password;
+
+        $meeting = Meeting::find($meetingID);
+
+        if($userType == 'moderator'){
+            if($password == $meeting->moderator_password){
+                $url = $this->join($meetingID, $userType, $userName);
+                return redirect($url);
+            }
+            else
+                return 'Invalid Password';
+        }elseif($userType == 'attendee'){
+            if($password == $meeting->attendee_password){
+                $url = $this->join($meetingID, $userType, $userName);
+                return redirect($url);
+            }
+            else
+                return 'Invalid Password';
+        }
 
     }
 
@@ -58,13 +84,12 @@ class MeetingController extends Controller
 
     }
 
-    public function join($meetingID, $userType){ //Get meeting ID and user type(attendee, moderator) as parameters
+    public function join($meetingID, $userType, $userName){ //Get meeting ID and user type(attendee, moderator) as parameters
 
         //When passing meeting ID get other details from database
         $meeting = Meeting::find($meetingID);
 
         $meetingName = $meeting->meeting_name;
-        $creator = $meeting->creator;
         $moderatorPassword = $meeting->moderator_password;
         $attendeePassword = $meeting->attendee_password;
         //If a moderator, use moderator password, else use attendee password
@@ -89,12 +114,21 @@ class MeetingController extends Controller
         if ($response->getReturnCode() == 'FAILED') {
             return 'Can\'t create room! please contact our administrator.';
         } else {
-            $joinParams = new JoinMeetingParameters($meetingID, $creator, $password);
+            $joinParams = new JoinMeetingParameters($meetingID, $userName, $password);
             $joinParams->setRedirect(true);
             $url = $bbb->getJoinMeetingURL($joinParams);
             return $url;
         }
 
+    }
+
+    public function viewMeetings(){
+        $meetings = Meeting::all();
+        return view('viewMeetings')->with('meetings', $meetings);
+    }
+
+    public function joinDetails($meeting_id){
+        return view('joinDetails')->with('meeting_id', $meeting_id);
     }
 
 }
