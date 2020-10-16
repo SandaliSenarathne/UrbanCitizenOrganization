@@ -28,6 +28,7 @@ Route::post('/meeting-create-and-join', 'MeetingController@createAndJoin');
 Route::post('/meeting-schedule', 'MeetingController@schedule');
 
 Route::get('/view-meetings', 'MeetingController@viewMeetings');
+
 Route::get('/join-details/{meeting_id}', 'MeetingController@joinDetails');
 Route::post('/meeting-join-pwd', function (Request $request) {
 
@@ -38,3 +39,8 @@ Route::post('/meeting-join-pwd', function (Request $request) {
     return view('getPwd')->with('user', $user)->with('userType', $userType)->with('meetingID', $meetingID);
 });
 Route::post('/meeting-join', 'MeetingController@joinViaCalendar');
+
+Route::get('/admin-approval', 'MeetingController@viewMeetingsPendingForAdminApproval');
+Route::get('/approve-meeting/{meeting_id}', 'MeetingController@approveMeeting');
+Route::get('/reject-meeting/{meeting_id}', 'MeetingController@rejectMeeting');
+

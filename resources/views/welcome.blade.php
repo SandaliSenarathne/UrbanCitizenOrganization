@@ -22,13 +22,13 @@
                     Urban Citizen Organization
                 </div>
                 <div class="links">
-                    <a href="">Home</a>
-                    <a href="">Events</a>
-                    <a href="">Gallery</a>
-                    <a href="">Blog</a>
+                    <a href="">Home#</a>
+                    <a href="">Events#</a>
+                    <a href="">Gallery#</a>
+                    <a href="/admin-approval">Admin Approval</a>
                     <a href="/online-conferences">Online Conferences</a>
-                    <a href="/view-meetings">Donations</a>
-                    <a href="">Archive</a>
+                    <a href="/view-meetings">View Meetings</a>
+                    <a href="">Archive#</a>
                 </div>
             </div>
         </div>
