@@ -184,10 +184,8 @@ a:hover {
   background: #fff;
   color: #fff;
   transition: all 0.2s ease-out 0s;
-  padding: 15px 0;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid #dedede;
-  z-index: 10;
+  z-index:10;
 }
 
 .top-bar.animated-header {
@@ -200,12 +198,14 @@ a:hover {
   border: 0;
   border-radius: 0;
   margin-bottom: 0;
-  padding: 0;
+  padding: 10px;
 }
+
 
 .navbar.bg-light {
   background: #fff !important;
 }
+
 
 .navbar .nav-item .nav-link {
   color: #444 !important;
@@ -223,7 +223,7 @@ a:hover {
 
 .navbar .nav-item:last-child .nav-link {
   padding-right: 0;
-}
+} */
 
 .dropdown-menu {
   background: #222222;
