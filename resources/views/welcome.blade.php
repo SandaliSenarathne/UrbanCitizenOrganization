@@ -39,12 +39,13 @@ Header Section Start
 ================================================== -->
 
 <!-- Navbar -->
-<section class="top-bar animated-header">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <!-- Container wrapper -->
     <div class="container-fluid">
       <!-- Navbar brand -->
-      <a class="navbar-brand" href="#">Brand</a>
+      <span class="navbar-brand mb-0 h1">
+        <img class="logoImg" src="images/logo.png" alt="logo">
+      </span>
 
       <!-- Toggle button -->
       <button
@@ -62,16 +63,19 @@ Header Section Start
       <!-- Collapsible wrapper -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Left links -->
-        <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Donations</a>
           </li>
           <!-- Navbar dropdown -->
           <li class="nav-item dropdown">
-            <a
+            <span
               class="nav-link dropdown-toggle"
               href="#"
               id="navbarDropdown"
@@ -79,44 +83,34 @@ Header Section Start
               data-toggle="dropdown"
               aria-expanded="false"
             >
-              Dropdown
-            </a>
+              Events
+            </span>
             <!-- Dropdown menu -->
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Event Calendar</a></li>
               <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
+              <li><a class="dropdown-item" href="#">Online Conferences</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-              >Disabled</a
-            >
+            <a class="nav-link" href="#">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Archieves</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Login</a>
           </li>
         </ul>
         <!-- Left links -->
-
-        <!-- Search form -->
-        <form class="d-flex input-group w-auto">
-          <input
-            type="search"
-            class="form-control"
-            placeholder="Type query"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-primary" type="button" data-ripple-color="dark">
-            Search
-          </button>
-        </form>
       </div>
       <!-- Collapsible wrapper -->
     </div>
     <!-- Container wrapper -->
   </nav>
-</section>
   <!-- Navbar -->
 
 <!--
@@ -138,9 +132,9 @@ Slider Section Start
                     </section> <!-- cd-intro -->
                     <!-- /.slider -->
                     <h2 class="wow fadeInUp animated" data-wow-delay=".6s" >
-                        Make Colombo the right type of city!
+                        Let's make Colombo the right type of city!
                     </h2>
-                    <a class="btn-lines dark light wow fadeInUp animated btn btn-default btn-green hvr-bounce-to-right" data-wow-delay=".9s" href="#" target="_blank">More About Us</a>
+                    <a class="btn-lines dark light wow fadeInUp animated btn btn-default btn-green hvr-bounce-to-right" data-wow-delay=".9s" href="#" target="_blank">Join with Us</a>
                 </div>
             </div>
         </div>
